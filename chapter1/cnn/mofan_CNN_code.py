@@ -125,20 +125,20 @@ for epoch in range(EPOCH):
 
         if step % 50 == 0:
             test_output, last_layer = cnn(test_x)
-            pred_y = torch.max(test_output, 1)[1].data.numpy()
-            accuracy = float((pred_y == test_y.data.numpy()).astype(int).sum()) / float(test_y.size(0))
+            pred_y = torch.max(test_output, 1)[1].numpy()
+            accuracy = float((pred_y == test_y.numpy()).astype(int).sum()) / float(test_y.size(0))
             print('Epoch: ', epoch, '| train loss: %.4f' % loss.data.numpy(), '| test accuracy: %.2f' % accuracy)
             if HAS_SK:
                 # Visualization of trained flatten layer (T-SNE)
                 tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
                 plot_only = 500
-                low_dim_embs = tsne.fit_transform(last_layer.data.numpy()[:plot_only, :])
+                low_dim_embs = tsne.fit_transform(last_layer.detach().numpy()[:plot_only, :])
                 labels = test_y.numpy()[:plot_only]
                 plot_with_labels(low_dim_embs, labels)
 plt.ioff()
 
 # print 10 predictions from test data
 test_output, _ = cnn(test_x[:10])
-pred_y = torch.max(test_output, 1)[1].data.numpy()
+pred_y = torch.max(test_output, 1)[1].numpy()
 print(pred_y, 'prediction number')
 print(test_y[:10].numpy(), 'real number')

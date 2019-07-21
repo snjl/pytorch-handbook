@@ -1,7 +1,6 @@
 import torch
 from torch import nn, optim
-import torch.nn.functional as F
-from torch.autograd import Variable
+
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision import datasets
@@ -82,7 +81,7 @@ for epoch in range(num_epoches):
             img = img.cuda()
             label = label.cuda()
         # 向前传播
-        out = model(img) # out 计算我们预测值 ?? 这里描述的不准确,可以认为就是预测出来了一组数据
+        out = model(img)  # out 计算我们预测值 ?? 这里描述的不准确,可以认为就是预测出来了一组数据
         loss = criterion(out, label)  # 计算损失函数/ loss/误差 比较预测的值和实际值的误差
         temp_loss = loss.item() * label.size(0)  # loss 是个 variable，所以取 data，因为 loss 是算出来的平均值，所以乘上数量得到总的
         running_loss = running_loss + temp_loss  # temp_loss 是计算的本次小批量的值,要累加才是合计的

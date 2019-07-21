@@ -136,10 +136,11 @@ for epoch in range(EPOCH):
             if use_gpu:
                 test_output = test_output.cpu()
                 last_layer = last_layer.cpu()
+                loss = loss.cpu()
             pred_y = torch.max(test_output, 1)[1].numpy()
 
             accuracy = float((pred_y == test_y.data.numpy()).astype(int).sum()) / float(test_y.size(0))
-            print('Epoch: ', epoch, '| train loss: %.4f' % loss.cpu().data.numpy(), '| test accuracy: %.2f' % accuracy)
+            print('Epoch: ', epoch, '| train loss: %.4f' % loss.data.numpy(), '| test accuracy: %.2f' % accuracy)
             if HAS_SK:
                 # Visualization of trained flatten layer (T-SNE)
                 tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
