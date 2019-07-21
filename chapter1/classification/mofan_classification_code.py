@@ -75,4 +75,4 @@ plt.ioff()
 plt.show()
 
 
-torch.save(net.state_dict(), './mofan_classification.pth')
+# torch.save(net.state_dict(), './mofan_classification.pth')

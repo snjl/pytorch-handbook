@@ -38,11 +38,12 @@ class Net(torch.nn.Module):
         return x
 
 
-net = Net(n_feature=1, n_hidden=20, n_output=1)  # define the network
+net = Net(n_feature=1, n_hidden=10, n_output=1)  # define the network
 print(net)  # net architecture
 
 # optimizer = torch.optim.SGD(net.parameters(), lr=0.1)
-optimizer = torch.optim.Adam(net.parameters(), lr=0.2)
+# optimizer = torch.optim.Adam(net.parameters(), lr=0.2)
+optimizer = torch.optim.RMSprop(net.parameters(), lr=0.01, alpha=0.9)
 
 loss_func = torch.nn.MSELoss()  # this is for regression mean squared loss
 
@@ -50,7 +51,7 @@ plt.ion()  # something about plotting
 
 for t in range(200):
     prediction = net(x)  # input x and predict based on x
-
+    print(prediction)
     loss = loss_func(prediction, y)  # must be (1. nn output, 2. target)
 
     # 三个优化步骤，梯度清除，loss反向传播，optimizer以学习效率lr优化梯度
