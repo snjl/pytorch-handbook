@@ -53,7 +53,6 @@ plt.ion()  # something about plotting
 
 for t in range(200):
     prediction = net(x)  # input x and predict based on x
-    print(prediction)
     loss = loss_func(prediction, y)  # must be (1. nn output, 2. target)
 
     # 三个优化步骤，梯度清除，loss反向传播，optimizer以学习效率lr优化梯度
