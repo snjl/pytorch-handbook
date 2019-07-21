@@ -10,7 +10,7 @@ import time
 
 # 定义超参数
 batch_size = 32  # 每次拿出来多少个样本进行训练
-learning_rate = 1e-3  # +1e-3表示1*10^-3，即0.001    e的负3次方是exp（3）
+learning_rate = 1e-2  # +1e-3表示1*10^-3，即0.001    e的负3次方是exp（3）
 
 num_epoches = 100  # x训练次数
 
@@ -50,6 +50,17 @@ class Logstic_Regression(nn.Module):
         out = self.logstic(x)
         return out
 
+# class Logstic_Regression(nn.Module):
+#     def __init__(self, in_dim, n_class):
+#         super(Logstic_Regression, self).__init__()
+#         self.logstic = nn.Linear(in_dim, 50)
+#         self.out = nn.Linear(50, n_class)
+#
+#     def forward(self, x):
+#         x = self.logstic(x)
+#         out = self.out(x)
+#         return out
+
 
 # in_dim 数据的维度
 # n_class 分类数量
@@ -60,7 +71,7 @@ use_gpu = torch.cuda.is_available()  # 判断是否有GPU加速
 if use_gpu:
     model = model.cuda()
 # 定义loss和optimizer
-criterion = nn.CrossEntropyLoss() # 交叉熵
+criterion = nn.CrossEntropyLoss()  # 交叉熵
 optimizer = optim.SGD(model.parameters(), lr=learning_rate)  # 随机梯度下降
 
 # 开始训练
