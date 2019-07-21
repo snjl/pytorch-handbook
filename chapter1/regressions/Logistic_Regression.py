@@ -33,7 +33,7 @@ test_dataset = datasets.MNIST(
 train_loader = DataLoader(
     train_dataset,  # 处理使用的数据集
     batch_size=batch_size,  # 每次batch 加载的样本数量
-    num_workers=2,  # 加载数据的使用几个线程
+    num_workers=0,  # 加载数据的使用几个线程
     shuffle=True  # 每次训练取数据的时候,是否随机打乱顺序
 )
 
@@ -64,8 +64,6 @@ if use_gpu:
 criterion = nn.CrossEntropyLoss() # 交叉熵
 optimizer = optim.SGD(model.parameters(), lr=learning_rate)  # 随机梯度下降
 
-
-
 # 开始训练
 for epoch in range(num_epoches):
     startTime = time.time()
@@ -81,11 +79,8 @@ for epoch in range(num_epoches):
         imgSize = img.size(0)  # 矩阵中第0维的大小,如果不带参数,就是矩阵的大小
         img = img.view(imgSize, -1)  # 将图片展开成 28x28  ,view 类似于 reshape的用法,改变数组/矩阵的形状 -1表示自动分配计算
         if use_gpu:
-            img = Variable(img).cuda()
-            label = Variable(label).cuda()
-        else:
-            img = Variable(img)
-            label = Variable(label)
+            img = img.cuda()
+            label = label.cuda()
         # 向前传播
         out = model(img) # out 计算我们预测值 ?? 这里描述的不准确,可以认为就是预测出来了一组数据
         loss = criterion(out, label)  # 计算损失函数/ loss/误差 比较预测的值和实际值的误差
@@ -131,11 +126,8 @@ for data in test_loader:
     img, label = data
     img = img.view(img.size(0), -1)
     if use_gpu:
-        img = Variable(img, volatile=True).cuda()
-        label = Variable(label, volatile=True).cuda()
-    else:
-        img = Variable(img, volatile=True)
-        label = Variable(label, volatile=True)
+        img = img.cuda()
+        label = label.cuda()
     out = model(img)
     loss = criterion(out, label)
     eval_loss = eval_loss + loss.item() * label.size(0)
