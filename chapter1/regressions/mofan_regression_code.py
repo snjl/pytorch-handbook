@@ -26,15 +26,17 @@ class Net(torch.nn.Module):
         # self.hidden2 = torch.nn.Linear(n_hidden, n_hidden)   # hidden layer2
 
         # 预测神经层，输入为上一层输出，然后输出结果
-        self.tt = torch.nn.Linear(n_hidden, n_output)  # output layer
-
+        self.predict = torch.nn.Linear(n_hidden, n_output)  # output layer
+    # [计算+激活]为一组固定操作，n组操作后进行最后一次计算作为输出
     def forward(self, x):
         # x通过self.hidden后输出隐藏层值，通过relu激活函数
-        x = F.relu(self.hidden(x))  # activation function for hidden layer
-        # x = F.relu(self.hidden2(x))
+        x = self.hidden(x)
+        x = F.relu(x)  # activation function for hidden layer
+        # x = self.hidden2(x)
+        # x = F.relu(x)
 
         # 将上一次的输出作为输出层输入，由于前面已经使用激励函数，所以输出值必定已经给予一定截断，所以在此不需要截断效果
-        x = self.tt(x)  # linear output
+        x = self.predict(x)  # linear output
         return x
 
 
