@@ -64,7 +64,7 @@ loss_func = torch.nn.CrossEntropyLoss()  # the target label is NOT an one-hotted
 
 # plt.ion()   # something about plotting
 
-for t in range(100000):
+for t in range(1000):
     out = net(x)                 # input x and predict based on x
     loss = loss_func(out, y)     # must be (1. nn output, 2. target), the target label is NOT one-hotted
 
