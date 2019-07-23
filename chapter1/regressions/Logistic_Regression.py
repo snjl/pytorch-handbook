@@ -1,5 +1,6 @@
 import torch
 from torch import nn, optim
+import torch.nn.functional as F
 
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -48,6 +49,7 @@ class Logstic_Regression(nn.Module):
 
     def forward(self, x):
         out = self.logstic(x)
+        out = F.relu(out)
         return out
 
 # class Logstic_Regression(nn.Module):
@@ -153,4 +155,4 @@ print('Test Loss: {:.6f}, Acc: {:.6f}'.format(testLoss, testAcc))
 print()
 
 # 保存模型
-torch.save(model.state_dict(), './logstic.pth')
+# torch.save(model.state_dict(), './logstic.pth')
