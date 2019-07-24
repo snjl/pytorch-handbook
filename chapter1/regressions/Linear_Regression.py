@@ -79,7 +79,7 @@ for epoch in range(num_epochs):
 
 # 开始验证
 model.eval()  # 让model变成测试模式，这主要是对dropout和batch normalization的操作在训练和测试的时候是不一样的
-predict = model(Variable(x_train))  # 开始预测
+predict = model(x_train)  # 开始预测
 predict = predict.data.numpy()  # 转化为 numpy 格式
 
 endTime = time.time()
